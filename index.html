@@ -46,17 +46,17 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            font-size: 2rem;
-            font-weight: bold;
-            color: #d4af37;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            justify-content: center;
         }
 
         .logo img {
-            height: 50px;
+            height: 80px;
             width: auto;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled .logo img {
+            height: 60px;
         }
 
         .nav-links {
@@ -489,8 +489,7 @@
     <header id="header">
         <nav>
             <div class="logo">
-                <img src="cdb28a26-546b-4e3a-afa0-f562ecdd66f8.png" alt="Royal Cuts Logo">
-                Royal Cuts
+                <img src="cdb28a26-546b-4e3a-afa0-f562ecdd66f8-removebg-preview.png" alt="Royal Cuts Logo">
             </div>
             <ul class="nav-links" id="nav-links">
                 <li><a href="#home">Accueil</a></li>
