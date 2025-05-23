@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Cuts - Salon de Coiffure Professionnel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #d4af37;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #d4af37;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section with Video Background */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease-in-out infinite;
+            z-index: -2;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: #fff;
+            max-width: 800px;
+            padding: 0 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 5%;
+            background: #f8f8f8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: #333;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Team Section */
+        .team {
+            padding: 100px 5%;
+            background: #fff;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .team-member {
+            position: relative;
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .member-image {
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover .image-placeholder {
+            transform: scale(1.05);
+        }
+
+        .member-info {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .member-info h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-info p {
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 5%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .service-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #d4af37;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 5%;
+            background: #222;
+            color: #fff;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+
+        .contact-form {
+            background: #333;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #d4af37;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: #444;
+            color: #fff;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            background: #555;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .contact-info h3 {
+            color: #d4af37;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(0,0,0,0.95);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: 0.3s;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Scroll animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-animate.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <div class="logo">Royal Cuts</div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home">Accueil</a></li>
+                <li><a href="#about">À Propos</a></li>
+                <li><a href="#team">Équipe</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+            <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-background">
+            <video autoplay muted loop playsinline id="hero-video" style="position: absolute; width: 100%; height: 100%; object-fit: cover;">
+                <source src="royalcuts-intro-VID.mov" type="video/mp4">
+            </video>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Royal Cuts</h1>
+            <p>L'Excellence en Coiffure Masculine</p>
+            <a href="#contact" class="cta-button">Prendre Rendez-vous</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about scroll-animate" id="about">
+        <div class="container">
+            <h2 class="section-title">À Propos de Nous</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Notre Passion, Votre Style</h3>
+                    <p>Chez Royal Cuts, nous croyons que chaque coupe est une œuvre d'art. Notre équipe de barbiers passionnés combine techniques traditionnelles et tendances modernes pour créer le look parfait qui reflète votre personnalité.</p>
+                    <p>Avec des années d'expérience et un engagement envers l'excellence, nous offrons bien plus qu'une simple coupe de cheveux - nous créons une expérience de gentleman complète dans un environnement sophistiqué et accueillant.</p>
+                    <p>Venez découvrir pourquoi Royal Cuts est devenu la référence en matière de coiffure masculine dans la région.</p>
+                </div>
+                <div class="about-image">
+                    <img src="b1.jpg" alt="Salon Royal Cuts - Vue intérieure">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services scroll-animate" id="services" style="background: #1a1a1a;">
+        <div class="container">
+            <h2 class="section-title" style="color: #d4af37;">Nos Services et Tarifs</h2>
+            <div class="services-grid" style="grid-template-columns: 1fr; max-width: 800px; margin: 0 auto; gap: 2rem;">
+                <div class="service-card" style="text-align: left; padding: 2rem; background: rgba(0,0,0,0.5); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 15px;">
+                    <h3 style="color: #d4af37; margin-bottom: 2rem; text-align: center; font-size: 1.5rem;">Des prix exemplaires pour les besoins de coiffure et de rasage individuels.</h3>
+                    
+                    <div style="display: grid; gap: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 1rem;">
+                            <div>
+                                <h4 style="color: #fff; font-size: 1.1rem;">Coupe de cheveux pour hommes + shampoing</h4>
+                            </div>
+                            <div style="color: #d4af37; font-size: 1.3rem; font-weight: bold; text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);">$30</div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 1rem;">
+                            <div>
+                                <h4 style="color: #fff; font-size: 1.1rem;">Coupe de cheveux homme + taille de barbe + shampoing</h4>
+                            </div>
+                            <div style="color: #d4af37; font-size: 1.3rem; font-weight: bold; text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);">$40</div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 1rem;">
+                            <div>
+                                <h4 style="color: #fff; font-size: 1.1rem;">Coupe de cheveux pour homme + Taille de barbe + Rasage à l'ancienne + Serviette chaude + Shampoing</h4>
+                            </div>
+                            <div style="color: #d4af37; font-size: 1.3rem; font-weight: bold; text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);">$45</div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 1rem;">
+                            <div>
+                                <h4 style="color: #fff; font-size: 1.1rem;">Contour</h4>
+                            </div>
+                            <div style="color: #d4af37; font-size: 1.3rem; font-weight: bold; text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);">$10</div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 1rem;">
+                            <div>
+                                <h4 style="color: #fff; font-size: 1.1rem;">Taille de barbe</h4>
+                            </div>
+                            <div style="color: #d4af37; font-size: 1.3rem; font-weight: bold; text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);">$15</div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 1rem;">
+                            <div>
+                                <h4 style="color: #fff; font-size: 1.1rem;">Rasage à l'ancienne + taille de barbe + serviette chaude</h4>
+                            </div>
+                            <div style="color: #d4af37; font-size: 1.3rem; font-weight: bold; text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);">$20</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-card" style="text-align: left; padding: 2rem; background: rgba(0,0,0,0.5); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 15px;">
+                    <h3 style="color: #d4af37; margin-bottom: 1rem; font-size: 1.5rem;">Annulation et Retard</h3>
+                    <p style="line-height: 1.8; color: #fff; opacity: 0.9;">
+                        L'impact d'un retard ou d'une annulation de dernière minute d'un client peut être significatif. Des cas répétés peuvent entraîner l'interdiction d'accès au client. Il est important pour les clients d'être conscients de leurs rendez-vous et de faire tout leur possible pour arriver à l'heure ou annuler avec un préavis suffisant afin d'éviter des impacts négatifs sur le barbier et les autres clients.
+                    </p>
+                    <p style="line-height: 1.8; margin-top: 1rem; color: #fff; opacity: 0.9;">
+                        Nous tolérons une(1) absence par client. Dès la deuxième(2), ce dernier devra assumer le montant de la séance manquée afin de pouvoir bénéficier à nouveau du service.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team scroll-animate" id="team">
+        <div class="container">
+            <h2 class="section-title">Notre Équipe</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="GABRIEL-NEW.jpg" alt="Alexandre Martin" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="member-info">
+                        <h3>Alexandre Martin</h3>
+                        <p>Maître Barbier - 15 ans d'expérience</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="Joseph.jpg" alt="Marc Dubois" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="member-info">
+                        <h3>Marc Dubois</h3>
+                        <p>Barbier Expert - Spécialiste des coupes modernes</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="Jalil.jpg" alt="Jean-Pierre Roy" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="member-info">
+                        <h3>Jean-Pierre Roy</h3>
+                        <p>Barbier Styliste - Expert en rasage traditionnel</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="b2.jpg" alt="Thomas Leblanc" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="member-info">
+                        <h3>Thomas Leblanc</h3>
+                        <p>Barbier Junior - Spécialiste des tendances</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section avec sélecteur d'heure -->
+    <section class="contact scroll-animate" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contactez-Nous</h2>
+            <div class="contact-content">
+                <div class="contact-form">
+                    <h3>Réservez Votre Rendez-vous</h3>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Nom Complet</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Téléphone</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Service Souhaité</label>
+                            <select id="service" name="service" style="width: 100%; padding: 12px; border: none; background: #444; color: #fff; border-radius: 5px;">
+                                <option value="">Sélectionnez un service</option>
+                                <option value="coupe-classique">Coupe de cheveux pour hommes + shampoing - $30</option>
+                                <option value="coupe-barbe">Coupe de cheveux homme + taille de barbe + shampoing - $40</option>
+                                <option value="forfait-complet">Coupe + Taille de barbe + Rasage + Serviette chaude - $45</option>
+                                <option value="contour">Contour - $10</option>
+                                <option value="barbe">Taille de barbe - $15</option>
+                                <option value="rasage">Rasage à l'ancienne + taille de barbe - $20</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Date souhaitée</label>
+                            <input type="date" id="date" name="date" required style="width: 100%; padding: 12px; border: none; background: #444; color: #fff; border-radius: 5px;">
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Heure souhaitée</label>
+                            <select id="time" name="time" required style="width: 100%; padding: 12px; border: none; background: #444; color: #fff; border-radius: 5px;">
+                                <option value="">Sélectionnez une heure</option>
+                                <option value="09:00">09:00</option>
+                                <option value="09:30">09:30</option>
+                                <option value="10:00">10:00</option>
+                                <option value="10:30">10:30</option>
+                                <option value="11:00">11:00</option>
+                                <option value="11:30">11:30</option>
+                                <option value="12:00">12:00</option>
+                                <option value="12:30">12:30</option>
+                                <option value="13:00">13:00</option>
+                                <option value="13:30">13:30</option>
+                                <option value="14:00">14:00</option>
+                                <option value="14:30">14:30</option>
+                                <option value="15:00">15:00</option>
+                                <option value="15:30">15:30</option>
+                                <option value="16:00">16:00</option>
+                                <option value="16:30">16:30</option>
+                                <option value="17:00">17:00</option>
+                                <option value="17:30">17:30</option>
+                                <option value="18:00">18:00</option>
+                                <option value="18:30">18:30</option>
+                                <option value="19:00">19:00</option>
+                                <option value="19:30">19:30</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message (optionnel)</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Détails additionnels ou préférences..."></textarea>
+                        </div>
+                        <button type="submit" class="cta-button" style="width: 100%; margin-top: 1rem;">Envoyer la Demande</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <h3>Informations de Contact</h3>
+                    <p>📍 3418 RUE STANLEY #R1, MONTREAL QC H3A 1R8 Canada</p>
+                    <p>📞 +1 (438) 308-7270</p>
+                    <p>✉️ info@magicelectro.com</p>
+                    
+                    <h3 style="margin-top: 2rem;">Heures d'Ouverture</h3>
+                    <p>Lundi - Vendredi: 9h00 - 20h00</p>
+                    <p>Samedi: 8h00 - 18h00</p>
+                    <p>Dimanche: 10h00 - 16h00</p>
+                    
+                    <h3 style="margin-top: 2rem;">Suivez-Nous</h3>
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <a href="#" style="color: #d4af37; font-size: 1.5rem; text-decoration: none;">📘 Facebook</a>
+                        <a href="#" style="color: #d4af37; font-size: 1.5rem; text-decoration: none;">📷 Instagram</a>
+                        <a href="#" style="color: #d4af37; font-size: 1.5rem; text-decoration: none;">🐦 Twitter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-animate').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Simulate form submission
+            alert('Merci pour votre demande de rendez-vous! Nous vous contacterons bientôt.');
+            this.reset();
+        });
+
+        // Team member hover effects
+        document.querySelectorAll('.team-member').forEach(member => {
+            member.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            member.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Service cards interactive effects
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.05)';
+                this.style.background = 'rgba(255,255,255,0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.background = 'rgba(255,255,255,0.1)';
+            });
+        });
+
+        // Add floating animation to CTA button
+        const ctaButton = document.querySelector('.cta-button');
+        setInterval(() => {
+            ctaButton.style.transform = 'translateY(-2px)';
+            setTimeout(() => {
+                ctaButton.style.transform = 'translateY(0)';
+            }, 1000);
+        }, 3000);
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-content');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+            
+            // Animate elements on load
+            setTimeout(() => {
+                document.querySelectorAll('.team-member').forEach((member, index) => {
+                    setTimeout(() => {
+                        member.style.opacity = '1';
+                        member.style.transform = 'translateY(0)';
+                    }, index * 200);
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>
